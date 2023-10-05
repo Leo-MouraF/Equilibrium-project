@@ -1,0 +1,238 @@
+body, h1, h4, h6, p, ul, li, a {
+    margin: 0px;
+    padding: 0px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Topo com logo e endereço */
+
+.topo-bg {
+    background: #54A316;
+}
+
+.topo-info {
+    display: flex;
+    flex-grow: 1 1 260px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 60px;
+}
+
+.topo-logo {
+    display: block;
+}
+
+.topo-logo h1 {
+    color: white;
+}
+
+.topo-logo h6 {
+    font-size: 1em;
+    margin-left: 55%;
+}
+
+.topo-endereco p {
+    font-size: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Faixa com breve descrição e menu */
+
+.menu-bg {
+    background: #222222;
+}
+
+.menu {
+    font-size: 1.25em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex: 1;
+    margin: 0 auto;
+    padding: 30px 60px;
+}
+
+.info-menu {
+    color: white;
+}
+
+.menu-nav ul{
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+}
+
+.menu-nav li {
+    padding: 0px 10px;
+}
+
+@media (max-width:600px) {
+    .menu-nav li {
+        margin-top: 20px;
+    }
+    .menu-nav ul {
+        flex-direction: column;
+    }
+    .suplementos h1 {
+        margin: 0 auto;
+    }
+}
+
+.menu-nav a {
+    color: #54A316;
+}
+
+.menu-nav a:hover {
+    color: white;
+}
+
+/* Suplementos */
+
+.suplementos {
+    background: #DBD7D7;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 30px;
+    /* border-bottom: 2px solid #54A316; */
+}
+
+.suplementos h1 {
+    margin: 15px 0px;
+    position: absolute;
+    margin: 10px 30px;
+    font-size: 2em;
+}
+
+.produto {
+    display: block;
+    flex: 1 1 calc(100% / 3);
+    padding: 10px 30px;
+    margin-top: 50px;
+    min-width: 200px;
+}
+
+.produto a {
+    color: #54A316;
+}
+
+.produto button {
+    width: 100%;
+    border: none;
+    padding: 10px;
+    font-size: 1.25em;
+    background: #54A316;
+}
+
+.produto button:hover {
+    background: #222222;
+    color: #54A316;
+    cursor: pointer;
+}
+
+.produto-preco {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 1.25em;
+    padding: 10px;
+    gap: 30px;
+    background: #222222;
+}
+
+.suplementos-img img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.ver-mais {
+    margin: 30px 0;
+    border-bottom: 2px solid #54A316;
+    width: 100%;
+    text-align: center;
+}
+
+.ver-mais a {
+    display: inline-block;
+    color: #54A316;
+    font-size: 1.5em;
+    padding-bottom: 20px;
+}
+
+.ver-mais a:hover {
+    color: #222222;
+}
+
+.contato-bg {
+    background: #54A316;
+    padding: 30px;
+}
+
+.contato-info {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 60px;
+}
+
+.contato-info h1 {
+    color: #222222;
+    font-size: 2em;
+}
+
+.contato-info a {
+    text-decoration: none;
+    color: #222222;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.contato-conteudo {
+    margin-top: 20px;
+}
+
+.contato-conteudo i {
+    padding-right: 10px;
+}
+
+.footer-bg {
+    background: #222222;
+    color: #54A316;
+    text-align: center;
+    font-size: 1.25em;
+    padding: 30px;
+}
+
+    .carrinho {
+    position: fixed;
+    bottom: 10px;
+    right: 0;
+    z-index: 99;
+    padding: 12px;
+    border-radius: 100px;
+    font-size: 2em;
+    color: #222222;
+    background: #54A316;
+}
