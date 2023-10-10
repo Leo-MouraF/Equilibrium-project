@@ -162,6 +162,46 @@ img {
     background: #222222;
 }
 
+.produto-single {
+    display: block;
+    flex: 1 1 calc(100% / 3);
+    padding: 10px 30px;
+    min-width: 200px;
+}
+
+.produto-single .produto-preco {
+    display: block;
+    text-align: center;
+    font-size: 1.25em;
+    padding: 15px;
+}
+
+.produto-single h4 {
+    font-size: 1.5em;
+}
+
+.produto-single .produto-preco p {
+    padding-top: 15px;
+}
+
+.produto-single a {
+    color: #54A316;
+}
+
+.produto-single button {
+    width: 100%;
+    border: none;
+    padding: 10px;
+    font-size: 1.25em;
+    background: #54A316;
+}
+
+.produto-single button:hover {
+    background: #222222;
+    color: #54A316;
+    cursor: pointer;
+}
+
 .suplementos-img img {
     width: 100%;
     height: 250px;
@@ -225,7 +265,7 @@ img {
     padding: 30px;
 }
 
-    .carrinho {
+.carrinho {
     position: fixed;
     bottom: 10px;
     right: 0;
@@ -235,4 +275,40 @@ img {
     font-size: 2em;
     color: #222222;
     background: #54A316;
+}
+
+.adicionar-produto {
+    display: block;
+    padding: 15px;
+}
+
+.adicionar-produto button {
+    display: block;
+}
+
+.info-produto {
+    margin: 0 auto;
+    text-align: center;
+    background: #54A316;
+    border: 2px solid green;
+}
+
+.info-produto div, h4 {
+    margin-bottom: 10px;
+}
+
+#adicionar_produto {
+    width: 100px;
+    margin: 0 auto;
+    border: none;
+    padding: 10px;
+    font-size: 1.25em;
+    background: #222222;
+    color: #54A316;
+}
+
+#adicionar_produto:hover {
+    background: #54A316;
+    color: #222222;
+    cursor: pointer;
 }

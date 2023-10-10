@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="produto-single">
+    <a href="">
+    <div class="produto-preco">
+        <h4>{{produto['nome']}}</h4>
+        <p>R${{produto['preco']}}</p>
+        <p>{{produto['descricao']}}</p>
+    </div>
+        <div class="suplementos-img">
+            <img src={{ url_for('static', filename=produto['url'])}} alt="">
+        </div>
+    </a>
+    <button>Comprar</button>
+</div>
+{% endblock %}

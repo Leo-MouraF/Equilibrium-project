@@ -1,0 +1,43 @@
+{% extends 'layout.html'%}
+
+{% block content %}
+
+<div class="adicionar-produto">
+    <div class="info-produto">
+        <h2>Adicionar um produto: </h2>
+        <form method="POST" action="/submit_item">
+            <div>
+                <span>
+                    <label for="nome"><h4>Nome: </h4></label>
+                        <input type="text" name="nome" id="nome" placeholder="Digite o nome do produto">
+                </span>
+            </div>
+            <div>
+                <span>
+                    <label for="valor"><h4>Valor: </h4></label>
+                    <input type="text" name="valor" id="valor" placeholder="Digite o valor do produto">
+                </span>
+            </div>
+            <div>
+                <span>
+                    <label for="descricao"><h4>Descrição</h4></label>
+                    <textarea name="descricao" placeholder="Digite uma descrição para o produto" id="descricao" cols="30" rows="10"></textarea>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <h4>Categoria</h4>
+                    <input type="radio" name="categoria" id="suplemento" value="suplemento">
+                    <label for="suplemento">Suplemento</label>
+                    <input type="radio" name="categoria" id="produto_natural" value="produto_natural">
+                    <label for="produto_natural">Produto Natural</label>
+                </span>
+            </div>
+            <div>
+                <input type="submit" value="Adicionar" id="adicionar_produto">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
