@@ -62,9 +62,9 @@ def gerar_novo_produto():
 
 def escrever_no_json(produtos, novo_produto):
     with open('data/produtos.json', 'a') as arquivo_produtos:
-        produtos[novo_produto] = novo_produto
-        novo_produto_json = json.dump(produtos, indent=4)
-        arquivo_produtos.writelines(novo_produto_json)
+        produtos['produto'] = novo_produto
+        novo_produto_json = json.dumps(produtos, arquivo_produtos, indent=4)
+        arquivo_produtos.write(novo_produto_json)
 
 def ler_o_json():
     with open('data/produtos.json', 'r') as arquivo_produtos:
