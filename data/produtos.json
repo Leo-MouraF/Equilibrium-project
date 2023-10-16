@@ -1,7 +1,7 @@
 {
     "produto_1": {
         "id": "produto_1",
-        "nome": "ProteÃƒÆ’Ã‚Â­na",
+        "nome": "Proteí­na",
         "preco": 99.99,
         "descricao": "lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsum",
         "url": "img-2.jpg",
@@ -9,7 +9,7 @@
     },
     "produto_2": {
         "id": "produto_2",
-        "nome": "ProteÃƒÆ’Ã‚Â­na",
+        "nome": "Proteína",
         "preco": 99.99,
         "descricao": "lorem ipsum",
         "url": "img3.jpg",
@@ -31,11 +31,18 @@
         "url": "produtonatural1.jpg",
         "categoria": "produto_natural"
     },
-    "produto": {
+    "76a69dd6-7d6c-4e6d-9090-d88aef654c23": {
         "id": "76a69dd6-7d6c-4e6d-9090-d88aef654c23",
         "nome": "Testando produto",
         "preco": "123456",
         "descricao": "assadda",
+        "categoria": "produto_natural"
+    },
+    "f7c3b504-f80f-45a2-afcc-8440748f89fe": {
+        "id": "f7c3b504-f80f-45a2-afcc-8440748f89fe",
+        "nome": "Testando produto 2",
+        "preco": "654321",
+        "descricao": "Descrição do produto teste 2",
         "categoria": "produto_natural"
     }
 }
