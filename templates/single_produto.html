@@ -4,9 +4,9 @@
 <div class="produto-single">
     <a href="">
     <div class="produto-preco">
-        <h4>{{produto['nome']}}</h4>
-        <p>R${{produto['preco']}}</p>
-        <p>{{produto['descricao']}}</p>
+        <h4>{{produto_a_mostrar['nome']}}</h4>
+        <p>R${{produto_a_mostrar['preco']}}</p>
+        <p>{{produto_a_mostrar['descricao']}}</p>
     </div>
         <div class="suplementos-img">
             <img src={{ url_for('static', filename=produto['url'])}} alt="">
