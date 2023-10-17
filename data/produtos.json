@@ -1,34 +1,30 @@
 {
     "produto_1": {
         "id": "produto_1",
-        "nome": "Proteí­na",
-        "preco": 99.99,
-        "descricao": "lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsum",
-        "url": "img-2.jpg",
-        "categoria": "suplemento"
+        "nome": "Produto1",
+        "preco": "11111",
+        "descricao": "Descrição do produto 1 atualizada de novo\r\n",
+        "categoria": "produto_natural"
     },
     "produto_2": {
         "id": "produto_2",
-        "nome": "Proteína",
-        "preco": 99.99,
-        "descricao": "lorem ipsum",
-        "url": "img3.jpg",
-        "categoria": "suplemento"
+        "nome": "Produto2",
+        "preco": "22",
+        "descricao": "Descrfição atualizada do produto 2 de novo",
+        "categoria": "produto_natural"
     },
     "produto_3": {
         "id": "produto_3",
-        "nome": "Produto Natural",
-        "preco": 99.99,
-        "descricao": "lorem ipsum",
-        "url": "produtonatural2.jpg",
-        "categoria": "produto_natural"
+        "nome": "Produto 3",
+        "preco": "33333",
+        "descricao": "Descrição atualizada do produto 3 novamente\r\n",
+        "categoria": "suplemento"
     },
     "produto_4": {
         "id": "produto_4",
-        "nome": "Produto Natural",
-        "preco": 99.99,
-        "descricao": "lorem ipsum",
-        "url": "produtonatural1.jpg",
+        "nome": "Produto 4",
+        "preco": "444444",
+        "descricao": "Descrição atualizada do produto 4",
         "categoria": "produto_natural"
     },
     "76a69dd6-7d6c-4e6d-9090-d88aef654c23": {
@@ -42,7 +38,7 @@
         "id": "f7c3b504-f80f-45a2-afcc-8440748f89fe",
         "nome": "Testando produto 2",
         "preco": "654321",
-        "descricao": "Descrição do produto teste 2",
+        "descricao": "Descrio do produto teste 2",
         "categoria": "produto_natural"
     }
 }

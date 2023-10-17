@@ -1,11 +1,6 @@
 from flask import Flask, abort, redirect, render_template, request, url_for
 
-from app_service import (
-    escrever_no_json,
-    gerar_novo_produto,
-    ler_o_json,
-    update_produto_service,
-)
+from app_service import busca_produto, gerar_novo_produto, update_produto_service
 
 app = Flask(__name__)
 
@@ -30,37 +25,34 @@ def produtos_naturais():
 
 @app.route("/produto/<produto_id>")
 def single_produto(produto_id):
-    dados = ler_o_json()
-    produto = dados.get(produto_id)
-    for item in dados:
-        if dados[item]["id"] == produto["id"]:
-            produto_a_mostrar = dados[item]
+    produto = busca_produto(produto_id)
 
     if produto == None:
-        abort(404)
+        return f"Produto não encontrado", abort(404)
     else:
-        return render_template("single_produto.html", produto=produto_a_mostrar)
+        return render_template("single_produto.html", produto=produto)
 
 
-@app.route("/update_produto/<produto_id>", methods=["GET", "POST"])
+@app.route("/update_produto/<produto_id>", methods=["GET"])
 def update_produto(produto_id):
-    if request.method == "POST":
-        dados = ler_o_json()
-        produto = dados.get(produto_id)
-
-        for item in dados:
-            if dados[item]["id"] == produto["id"]:
-                produto_a_mostrar = dados[item]
+    if request.method == "GET":
+        produto = busca_produto(produto_id)
 
         if produto == None:
-            abort(404)
-        else:
-            retornar = render_template("update_produto.html", produto=produto_a_mostrar)
-            data = request.form
-            update_produto_service(data, produto_a_mostrar)
-            return retornar
+            return f"Produto não encontrado", abort(404)
+        return render_template("update_produto.html", produto=produto)
+
+
+@app.route("/apply_update_produto/<produto_id>", methods=["POST"])
+def apply_update_produto(produto_id):
+    if request.method == "POST":
+        produto = busca_produto(produto_id)
+        data = request.form
+        produto_novo = update_produto_service(data, produto)
     else:
-        return render_template("update_produto.html", produto=produto_id)
+        return f"Produto não encontrado", abort(404)
+
+    return render_template("single_produto.html", produto=produto_novo)
 
 
 @app.route("/submit_item", methods=["GET", "POST"])

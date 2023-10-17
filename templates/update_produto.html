@@ -5,7 +5,7 @@
 <div class="adicionar-produto">
     <div class="info-produto">
         <h2>Alterar um produto: </h2>
-        <form method="POST" action="/update_produto/{{produto['id']}}">
+        <form method="post" action="{{ url_for('apply_update_produto', produto_id=produto['id']) }}">
             <div>
                 <span>
                     <label for="nome"><h4>Nome: </h4></label>

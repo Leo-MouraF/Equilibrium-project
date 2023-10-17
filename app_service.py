@@ -48,6 +48,16 @@ def escrever_no_json(produtos, novo_produto):
 
 
 def ler_o_json():
-    with open("data/produtos.json", "r") as arquivo_produtos:
+    with open("data/produtos.json", "r", encoding="utf-8") as arquivo_produtos:
         produtos_dicionario = json.load(arquivo_produtos)
         return produtos_dicionario
+
+
+def busca_produto(produto_id):
+    dados = ler_o_json()
+    produto = dados.get(produto_id)
+
+    for item in dados:
+        if dados[item]["id"] == produto["id"]:
+            produto_a_mostrar = dados[item]
+    return produto_a_mostrar
