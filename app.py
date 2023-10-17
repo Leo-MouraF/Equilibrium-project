@@ -1,6 +1,11 @@
 from flask import Flask, abort, redirect, render_template, request, url_for
 
-from app_service import busca_produto, gerar_novo_produto, update_produto_service
+from app_service import (
+    busca_produto,
+    gerar_novo_produto,
+    service_delete_produto,
+    update_produto_service,
+)
 
 app = Flask(__name__)
 
@@ -64,3 +69,9 @@ def submit_item():
         return redirect(url_for("single_produto", produto_id=id))
     else:
         return render_template("submit_item.html")
+
+
+@app.route("/delete_produto/<produto_id>", methods=["POST"])
+def delete_produto(produto_id):
+    service_delete_produto(produto_id)
+    return redirect(url_for("index"))

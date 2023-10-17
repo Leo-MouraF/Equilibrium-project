@@ -1,16 +1,9 @@
 {
     "produto_1": {
         "id": "produto_1",
-        "nome": "Produto1",
+        "nome": "Produto_____1",
         "preco": "11111",
         "descricao": "Descrição do produto 1 atualizada de novo\r\n",
-        "categoria": "produto_natural"
-    },
-    "produto_2": {
-        "id": "produto_2",
-        "nome": "Produto2",
-        "preco": "22",
-        "descricao": "Descrfição atualizada do produto 2 de novo",
         "categoria": "produto_natural"
     },
     "produto_3": {

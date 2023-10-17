@@ -61,3 +61,12 @@ def busca_produto(produto_id):
         if dados[item]["id"] == produto["id"]:
             produto_a_mostrar = dados[item]
     return produto_a_mostrar
+
+
+def service_delete_produto(produto_id):
+    produtos_json = ler_o_json()
+    del produtos_json[produto_id]
+
+    with open("data/produtos.json", "w", encoding="utf-8") as arquivo_produtos:
+        deletou_produto = json.dumps(produtos_json, indent=4, ensure_ascii=False)
+        arquivo_produtos.write(deletou_produto)
