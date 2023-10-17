@@ -2,7 +2,6 @@ import json
 from uuid import uuid4
 
 
-
 def gerar_novo_produto(data):
     name = str(data.get("nome"))
     preco = data.get("valor")
@@ -20,6 +19,25 @@ def gerar_novo_produto(data):
     escrever_no_json(produtos_json, novo_produto)
 
     return novo_produto
+
+
+def update_produto_service(data, produto_a_alterar):
+    name = str(data.get("nome"))
+    preco = data.get("valor")
+    description = str(data.get("descricao"))
+    category = str(data.get("categoria"))
+    produto_a_alterar = {
+        "id": produto_a_alterar["id"],
+        "nome": name,
+        "preco": preco,
+        "descricao": description,
+        "categoria": category,
+    }
+
+    produtos_json = ler_o_json()
+    escrever_no_json(produtos_json, produto_a_alterar)
+
+    return produto_a_alterar
 
 
 def escrever_no_json(produtos, novo_produto):

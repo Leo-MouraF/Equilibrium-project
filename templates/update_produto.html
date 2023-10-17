@@ -1,0 +1,43 @@
+{% extends 'layout.html'%}
+
+{% block content %}
+
+<div class="adicionar-produto">
+    <div class="info-produto">
+        <h2>Alterar um produto: </h2>
+        <form method="POST" action="/update_produto/{{produto['id']}}">
+            <div>
+                <span>
+                    <label for="nome"><h4>Nome: </h4></label>
+                        <input type="text" name="nome" id="nome" value={{produto['nome']}} placeholder="Digite o nome do produto">
+                </span>
+            </div>
+            <div>
+                <span>
+                    <label for="valor"><h4>Valor: </h4></label>
+                    <input type="text" name="valor" id="valor" value={{produto['preco']}} placeholder="Digite o valor do produto">
+                </span>
+            </div>
+            <div>
+                <span>
+                    <label for="descricao"><h4>Descrição</h4></label>
+                    <textarea name="descricao" placeholder="Digite uma descrição para o produto" id="descricao" cols="30" rows="10">{{produto['descricao']}}</textarea>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <h4>Categoria</h4>
+                    <input type="radio" name="categoria" id="suplemento" value="suplemento" {% if produto['categoria'] == 'suplemento'%}checked{% endif %}>
+                    <label for="suplemento">Suplemento</label>
+                    <input type="radio" name="categoria" id="produto_natural" value="produto_natural" {% if produto['categoria'] == 'produto_natural'%}checked{% endif %}>
+                    <label for="produto_natural">Produto Natural</label>
+                </span>
+            </div>
+            <div>
+                <input type="submit" value="Alterar" id="adicionar_produto">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
