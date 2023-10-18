@@ -70,3 +70,17 @@ def service_delete_produto(produto_id):
     with open("data/produtos.json", "w", encoding="utf-8") as arquivo_produtos:
         deletou_produto = json.dumps(produtos_json, indent=4, ensure_ascii=False)
         arquivo_produtos.write(deletou_produto)
+
+
+def filtrar_produto():
+    suplementos_dict = {}
+    prdt_naturais_dict = {}
+    produtos_json = ler_o_json()
+
+    for produto_id, produto_info in produtos_json.items():
+        if produto_info["categoria"] == "suplemento":
+            suplementos_dict[produto_id] = produto_info
+        else:
+            prdt_naturais_dict[produto_id] = produto_info
+
+    return suplementos_dict, prdt_naturais_dict

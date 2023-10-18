@@ -2,6 +2,7 @@ from flask import Flask, abort, redirect, render_template, request, url_for
 
 from app_service import (
     busca_produto,
+    filtrar_produto,
     gerar_novo_produto,
     service_delete_produto,
     update_produto_service,
@@ -15,17 +16,24 @@ if __name__ == "__main__":
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    suplementos, produtos_naturais = filtrar_produto()
+    return render_template(
+        "index.html", suplementos=suplementos, produtos_naturais=produtos_naturais
+    )
 
 
 @app.route("/suplementos")
 def suplementos():
-    return render_template("suplementos.html")
+    suplementos, produtos_naturais = filtrar_produto()
+    return render_template("suplementos.html", suplementos=suplementos)
 
 
 @app.route("/produtos_naturais")
 def produtos_naturais():
-    return render_template("produtos_naturais.html")
+    suplementos, produtos_naturais = filtrar_produto()
+    return render_template(
+        "produtos_naturais.html", produtos_naturais=produtos_naturais
+    )
 
 
 @app.route("/produto/<produto_id>")

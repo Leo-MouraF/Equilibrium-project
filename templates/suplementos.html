@@ -38,222 +38,24 @@
 <section>
     <div class="suplementos" id="suplementos">
         <h1>Suplementos</h1>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
+        {% for suplemento in suplementos %}
+            <div class="produto">
+                <a href="">
+                    <div class="produto-preco">
+                        <h4>{{suplementos[suplemento]['nome']}}</h4>
+                        <p>R${{suplementos[suplemento]['preco']}}</p>
+                    </div>
+                    <div class="suplementos-img">
+                        <img src={{ url_for('static', filename='img-2.jpg')}} alt="">
+                    </div>
+                    <div class="produto-preco">
+                        <p>{{suplementos[suplemento]['descricao']}}</p>
+                    </div>
+                </a>
+                <button>Comprar</button>
+                <button>Adicionar ao carrinho</button>
             </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img-2.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img3.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img4.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img5.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img6.png')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='suplementos-alimentares.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img-2.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img3.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img4.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img5.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img6.png')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='suplementos-alimentares.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img-2.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img3.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img4.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img5.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='img6.png')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
-        <div class="produto">
-            <a href="">
-            <div class="produto-preco">
-                <h4>Suplemento</h4>
-                <p>R$ 99,99</p>
-            </div>
-                <div class="suplementos-img">
-                    <img src={{ url_for('static', filename='suplementos-alimentares.jpg')}} alt="">
-                </div>
-            </a>
-            <button>Comprar</button>
-        </div>
+        {% endfor %}
     </div>
 </sction>
 

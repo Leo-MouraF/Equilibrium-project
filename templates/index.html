@@ -46,79 +46,24 @@
     <section>
         <div class="suplementos" id="suplementos">
             <h1>Suplementos</h1>
+            {% for suplemento in suplementos %}
             <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
+                <a href="{{ url_for('single_produto', produto_id=suplemento)}}">
+                    <div class="produto-preco">
+                        <h4>{{suplementos[suplemento]['nome']}}</h4>
+                        <p>R${{suplementos[suplemento]['preco']}}</p>
+                    </div>
                     <div class="suplementos-img">
                         <img src={{ url_for('static', filename='img-2.jpg')}} alt="">
+                    </div>
+                    <div class="produto-preco">
+                        <p>{{suplementos[suplemento]['descricao'][:20]}}...</p>
                     </div>
                 </a>
                 <button>Comprar</button>
                 <button>Adicionar ao carrinho</button>
             </div>
-            <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
-                    <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='img3.jpg')}} alt="">
-                    </div>
-                </a>
-                <button>Comprar</button>
-            </div>
-            <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
-                    <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='img4.jpg')}} alt="">
-                    </div>
-                </a>
-                <button>Comprar</button>
-            </div>
-            <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
-                    <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='img5.jpg')}} alt="">
-                    </div>
-                </a>
-                <button>Comprar</button>
-            </div>
-            <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
-                    <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='img6.png')}} alt="">
-                    </div>
-                </a>
-                <button>Comprar</button>
-            </div>
-            <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
-                    <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='suplementos-alimentares.jpg')}} alt="">
-                    </div>
-                </a>
-                <button>Comprar</button>
-            </div>
+            {% endfor %}
             <div class="ver-mais">
                 <a href={{ url_for('suplementos')}}>Ver mais</a>
             </div>
@@ -128,78 +73,28 @@
     <section>
         <div class="suplementos" id="produtos-naturais">
             <h1>Produtos Naturais</h1>
+            {% for produto in produtos_naturais %}
             <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
+                <a href="{{ url_for('single_produto', produto_id=produto)}}">
+                    <div class="produto-preco">
+                        <h4>{{produtos_naturais[produto]['nome']}}</h4>
+                        <p>R${{produtos_naturais[produto]['preco']}}</p>
+                    </div>
                     <div class="suplementos-img">
                         <img src={{ url_for('static', filename='produtonatural1.jpg')}} alt="">
                     </div>
-                </a>
-                <button>Comprar</button>
-            </div>
-            <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
-                    <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='produtonatural2.jpg')}} alt="">
+                    <div class="produto-preco">
+                        {% if produtos_naturais[produto]['descricao']|length > 20 %}
+                        <p>{{produtos_naturais[produto]['descricao'][:20]}}...</p>
+                        {% else %}
+                        <p>{{produtos_naturais[produto]['descricao']}}</p>
+                        {% endif %}
                     </div>
                 </a>
                 <button>Comprar</button>
+                <button>Adicionar ao carrinho</button>
             </div>
-            <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
-                    <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='produtonatural1.jpg')}} alt="">
-                    </div>
-                </a>
-                <button>Comprar</button>
-            </div>
-            <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
-                    <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='produtonatural2.jpg')}} alt="">
-                    </div>
-                </a>
-                <button>Comprar</button>
-            </div>
-            <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
-                    <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='produtonatural1.jpg')}} alt="">
-                    </div>
-                </a>
-                <button>Comprar</button>
-            </div>
-            <div class="produto">
-                <a href="">
-                <div class="produto-preco">
-                    <h4>Suplemento</h4>
-                    <p>R$ 99,99</p>
-                </div>
-                    <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='produtonatural2.jpg')}} alt="">
-                    </div>
-                </a>
-                <button>Comprar</button>
-            </div>
+            {% endfor %}
             <div class="ver-mais">
                 <a href={{ url_for('produtos_naturais') }}>Ver mais</a>
             </div>
@@ -218,7 +113,7 @@
                 <h1>Contato</h1>
                 <div class="contato-conteudo">
                     <span>
-                        <a href="tel:+554836442376">
+                        <a href="tel:+554836442376" target="_blank" rel="noopener">
                             <i class="fa-solid fa-phone"></i>
                             (48) 3644-2376
                         </a>
@@ -227,7 +122,7 @@
                 <div class="contato-conteudo">
                     <span>
                         <!-- <a href="tel:+5548991250202">(48) 9 9125-0202</a> -->
-                        <a href="https://api.whatsapp.com/send?phone=+5548991250202&text=urlencodedtext">
+                        <a href="https://api.whatsapp.com/send?phone=+5548991250202&text=Olá! Gostaria de comprar um negócinho." target="_blank" rel="noopener">
                             <i class="fa-brands fa-whatsapp"></i>
                             (48) 9 9125-0202
                         </a>
@@ -235,7 +130,7 @@
                 </div>
                 <div class="contato-conteudo">
                     <span>
-                        <a href="">
+                        <a href="https://instagram.com/qmerda_mano?utm_source=qr&igshid=MzNlNGNkZWQ4Mg==" target="_blank" rel="noopener">
                             <i class="fa-brands fa-instagram"></i>
                             equilibrium_laguna
                         </a>

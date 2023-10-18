@@ -6,13 +6,6 @@
         "descricao": "Descrição do produto 1 atualizada de novo\r\n",
         "categoria": "produto_natural"
     },
-    "produto_3": {
-        "id": "produto_3",
-        "nome": "Produto 3",
-        "preco": "33333",
-        "descricao": "Descrição atualizada do produto 3 novamente\r\n",
-        "categoria": "suplemento"
-    },
     "produto_4": {
         "id": "produto_4",
         "nome": "Produto 4",
@@ -33,5 +26,26 @@
         "preco": "654321",
         "descricao": "Descrio do produto teste 2",
         "categoria": "produto_natural"
+    },
+    "12012ae2-64bd-471f-a5bf-37f64a40c5de": {
+        "id": "12012ae2-64bd-471f-a5bf-37f64a40c5de",
+        "nome": "Novo produto",
+        "preco": "123456",
+        "descricao": "Descrição de um novo produto para teste",
+        "categoria": "suplemento"
+    },
+    "ff561e45-459c-4da6-869a-cea437e1b9e7": {
+        "id": "ff561e45-459c-4da6-869a-cea437e1b9e7",
+        "nome": "Outro suplemento",
+        "preco": "789",
+        "descricao": "Descrição do suplementou outro suplemento",
+        "categoria": "suplemento"
+    },
+    "743b8ee5-d02b-4ca1-b4e8-03a212eabaab": {
+        "id": "743b8ee5-d02b-4ca1-b4e8-03a212eabaab",
+        "nome": "Novo suplemento",
+        "preco": "666",
+        "descricao": "Novo suplemento adicionado a loja!!!",
+        "categoria": "suplemento"
     }
 }

@@ -144,6 +144,7 @@ img {
     padding: 10px;
     font-size: 1.25em;
     background: #54A316;
+    border: 0.5px solid #222222
 }
 
 .produto button:hover {
