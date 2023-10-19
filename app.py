@@ -4,6 +4,7 @@ from app_service import (
     busca_produto,
     filtrar_produto,
     gerar_novo_produto,
+    processa_imagem,
     service_delete_produto,
     update_produto_service,
 )
@@ -61,7 +62,9 @@ def apply_update_produto(produto_id):
     if request.method == "POST":
         produto = busca_produto(produto_id)
         data = request.form
-        produto_novo = update_produto_service(data, produto)
+        img_form = request.files["imagem"]
+        img, img_type = processa_imagem(img_form)
+        produto_novo = update_produto_service(data, produto, img, img_type)
     else:
         return f"Produto não encontrado", abort(404)
 
@@ -72,7 +75,9 @@ def apply_update_produto(produto_id):
 def submit_item():
     if request.method == "POST":
         data = request.form
-        novo_item = gerar_novo_produto(data)
+        img_form = request.files["imagem"]
+        img, img_type = processa_imagem(img_form)
+        novo_item = gerar_novo_produto(data, img, img_type)
         id = novo_item["id"]
         return redirect(url_for("single_produto", produto_id=id))
     else:

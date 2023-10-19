@@ -46,7 +46,7 @@
                         <p>R${{suplementos[suplemento]['preco']}}</p>
                     </div>
                     <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='img-2.jpg')}} alt="">
+                        <img src="data:{{ 'image/' + suplementos[suplemento]['imagem']['tipo'] }};base64,{{ suplementos[suplemento]['imagem']['imagem_data']}}" alt="">
                     </div>
                     <div class="produto-preco">
                         <p>{{suplementos[suplemento]['descricao']}}</p>

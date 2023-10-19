@@ -5,7 +5,7 @@
 <div class="adicionar-produto">
     <div class="info-produto">
         <h2>Alterar um produto: </h2>
-        <form method="post" action="{{ url_for('apply_update_produto', produto_id=produto['id']) }}">
+        <form method="post" action="{{ url_for('apply_update_produto', produto_id=produto['id']) }}" enctype="multipart/form-data">
             <div>
                 <span>
                     <label for="nome"><h4>Nome: </h4></label>
@@ -22,6 +22,12 @@
                 <span>
                     <label for="descricao"><h4>Descrição</h4></label>
                     <textarea name="descricao" placeholder="Digite uma descrição para o produto" id="descricao" cols="30" rows="10">{{produto['descricao']}}</textarea>
+                </span>
+            </div>
+            <div>
+                <span>
+                    <label for="imagem"><h4>Foto do produto (<strong>jpeg ou png</stong>): </h4></label>
+                    <input type="file" name="imagem" id="imagem" accept="image/jpeg, image/png">
                 </span>
             </div>
             <div>

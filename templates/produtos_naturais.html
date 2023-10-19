@@ -45,7 +45,7 @@
                         <p>R${{produtos_naturais[produto]['preco']}}</p>
                     </div>
                     <div class="suplementos-img">
-                        <img src={{ url_for('static', filename='produtonatural1.jpg')}} alt="">
+                        <img src="data:{{ 'image/' + produtos_naturais[produto]['imagem']['tipo'] }};base64,{{ produtos_naturais[produto]['imagem']['imagem_data']}}" alt="">
                     </div>
                     <div class="produto-preco">
                         <p>{{produtos_naturais[produto]['descricao']}}</p>

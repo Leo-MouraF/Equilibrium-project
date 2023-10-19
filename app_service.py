@@ -1,8 +1,10 @@
+import base64
+import imghdr
 import json
 from uuid import uuid4
 
 
-def gerar_novo_produto(data):
+def gerar_novo_produto(data, img, img_type):
     name = str(data.get("nome"))
     preco = data.get("valor")
     description = str(data.get("descricao"))
@@ -12,6 +14,7 @@ def gerar_novo_produto(data):
         "nome": name,
         "preco": preco,
         "descricao": description,
+        "imagem": {"imagem_data": img, "tipo": img_type},
         "categoria": category,
     }
 
@@ -21,7 +24,15 @@ def gerar_novo_produto(data):
     return novo_produto
 
 
-def update_produto_service(data, produto_a_alterar):
+def processa_imagem(img):
+    img_byte = img.read()
+    image_data = base64.b64encode(img_byte).decode("utf-8")
+    image_type = imghdr.what(None, h=img_byte)
+
+    return image_data, image_type
+
+
+def update_produto_service(data, produto_a_alterar, img, img_type):
     name = str(data.get("nome"))
     preco = data.get("valor")
     description = str(data.get("descricao"))
@@ -31,6 +42,7 @@ def update_produto_service(data, produto_a_alterar):
         "nome": name,
         "preco": preco,
         "descricao": description,
+        "imagem": {"imagem_data": img, "tipo": img_type},
         "categoria": category,
     }
 
