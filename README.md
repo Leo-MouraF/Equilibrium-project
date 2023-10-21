@@ -22,3 +22,5 @@ Feito isso, o próximo comando será:
 
 Observação: Caso encontre algum problema para rodar a aplicação, verifique se o diretório em que você está tentando utilizar o comando "flask run", tem o final "Equilibrium-project".
 Com isso será possível visualizar a página home e navegar pelas demais abas. 
+# Você encontrará o seguinte:
+![](images/part-1.PNG)
