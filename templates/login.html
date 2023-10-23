@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block content%}
+
+<div class="adicionar-produto">
+    <div class="info-produto">
+        <h2>Login: </h2>
+        <form method="POST" action="/login" enctype="multipart/form-data">
+            <div>
+                <span>
+                    <label for="email"><h4>E-mail: </h4></label>
+                        <input type="email" name="email" id="email" placeholder="Digite o email">
+                </span>
+            </div>
+            <div>
+                <span>
+                    <label for="valor"><h4>Senha: </h4></label>
+                    <input type="password" name="senha" id="senha" placeholder="Digite a senha">
+                </span>
+            </div>
+            <div>
+                <input type="submit" value="Entrar" id="entrar">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
