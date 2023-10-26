@@ -21,13 +21,14 @@ def gerar_novo_produto(data, img, img_type):
             raise ValueError("Preencher todos os campos.")
 
     name = str(data.get("nome"))
-    preco = data.get("valor")
+    preco = float(data.get("valor"))
     description = str(data.get("descricao"))
     category = str(data.get("categoria"))
+    preco_formatado = f"{preco:.2f}"
     novo_produto = {
         "id": str(uuid4()),
         "nome": name,
-        "preco": preco,
+        "preco": preco_formatado,
         "descricao": description,
         "imagem": {"imagem_data": img, "tipo": img_type},
         "categoria": category,

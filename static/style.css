@@ -163,6 +163,16 @@ img {
     background: #222222;
 }
 
+.preco-produto {
+    font-size: 1.5em;
+}
+
+.descricaco-produto {
+    margin: 0 auto;
+    padding: 35px;
+    text-align: justify;
+}
+
 .produto-single {
     display: block;
     flex: 1 1 calc(100% / 3);

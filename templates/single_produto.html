@@ -5,8 +5,8 @@
     <a href="">
     <div class="produto-preco">
         <h4>{{produto['nome']}}</h4>
-        <p>R${{produto['preco']}}</p>
-        <p>{{produto['descricao']}}</p>
+        <p class='preco-produto'>R${{produto['preco']}}</p>
+        <p class='descricaco-produto'>{{produto['descricao']}}</p>
     </div>
         <div class="suplementos-img">
             <img src="data:{{ 'image/' + produto['imagem']['tipo'] }};base64,{{ produto['imagem']['imagem_data']}}" alt="">
