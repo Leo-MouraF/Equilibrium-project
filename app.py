@@ -104,7 +104,7 @@ def update_produto(produto_id):
         produto = busca_produto(produto_id)
 
         if produto == None:
-            return f"Produto não encontrado", abort(404)
+            abort(404)
         return render_template("update_produto.html", produto=produto)
 
 
@@ -118,11 +118,16 @@ def apply_update_produto(produto_id):
     if request.method == "POST":
         produto = busca_produto(produto_id)
         data = request.form
-        img_form = request.files["imagem"]
-        img, img_type = processa_imagem(img_form)
-        produto_novo = update_produto_service(data, produto, img, img_type)
+        if not "imagem" in request.files or request.files["imagem"].filename == "":
+            img = produto["imagem"]["imagem_data"]
+            img_type = produto["imagem"]["tipo"]
+            produto_novo = update_produto_service(data, produto, img, img_type)
+        else:
+            img_form = request.files["imagem"]
+            img, img_type = processa_imagem(img_form)
+            produto_novo = update_produto_service(data, produto, img, img_type)
     else:
-        return f"Produto não encontrado", abort(404)
+        return render_template("update_produto.html", produto=produto)
 
     return render_template("single_produto.html", produto=produto_novo)
 
@@ -133,30 +138,18 @@ def submit_item():
     Endpoint que renderiza a página para adicionar um novo item.
     Chamando as funções para a inserção dos dados no arquivo json.
     """
-    mensagem = None
 
     if request.method == "POST":
         data = request.form
-        img_form = request.files["imagem"]
-        if (
-            not data.get("nome")
-            or not data.get("valor")
-            or not data.get("descricao")
-            or not data.get("categoria")
-        ):
-            mensagem = "Preencher todos os campos."
-            return render_template("submit_item.html", mensagem=mensagem)
+        if not "imagem" in request.files or request.files["imagem"].filename == "":
+            raise ValueError("Não foi inserida uma imagem.")
+        else:
+            img_form = request.files["imagem"]
+            img, img_type = processa_imagem(img_form)
+            novo_item = gerar_novo_produto(data, img, img_type)
+            id = novo_item["id"]
 
-        if "imagem" not in request.files:
-            mensagem = "Adicionar uma imagem do produto."
-            return render_template("submit_item.html", mensagem=mensagem)
-
-        img, img_type = processa_imagem(img_form)
-        novo_item = gerar_novo_produto(data, img, img_type)
-        id = novo_item["id"]
-
-        mensagem = f"Produto {data['nome']} adicionado com sucesso!"
-        return redirect(url_for("single_produto", produto_id=id, mensagem=mensagem))
+        return redirect(url_for("single_produto", produto_id=id))
     else:
         return render_template("submit_item.html")
 

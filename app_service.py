@@ -16,6 +16,9 @@ def gerar_novo_produto(data, img, img_type):
     novo_produto, dicionário com todas as informações adicionadas, isso após ser
     inserido ao json.
     """
+    for item in data:
+        if not data.get(item):
+            raise ValueError("Preencher todos os campos.")
 
     name = str(data.get("nome"))
     preco = data.get("valor")
@@ -32,7 +35,6 @@ def gerar_novo_produto(data, img, img_type):
 
     produtos_json = ler_o_json()
     escrever_no_json(produtos_json, novo_produto)
-
     return novo_produto
 
 

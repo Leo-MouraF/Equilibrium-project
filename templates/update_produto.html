@@ -24,6 +24,9 @@
                     <textarea name="descricao" placeholder="Digite uma descrição para o produto" id="descricao" cols="30" rows="10">{{produto['descricao']}}</textarea>
                 </span>
             </div>
+            <div class="suplementos-img">
+                <img src="data:{{ 'image/' + produto['imagem']['tipo'] }};base64,{{ produto['imagem']['imagem_data']}}">
+            </div>
             <div>
                 <span>
                     <label for="imagem"><h4>Foto do produto (<strong>jpeg ou png</stong>): </h4></label>
