@@ -40,15 +40,15 @@
         <h1>Suplementos</h1>
         {% for suplemento in suplementos %}
             <div class="produto">
-                <a href="">
+                <a href="{{url_for('single_produto', produto_id=suplemento)}}">
                     <div class="produto-preco">
                         <h4>{{suplementos[suplemento]['nome']}}</h4>
                         <p>R${{suplementos[suplemento]['preco']}}</p>
                     </div>
                     <div class="suplementos-img">
-                        <img src="data:{{ 'image/' + suplementos[suplemento]['imagem']['tipo'] }};base64,{{ suplementos[suplemento]['imagem']['imagem_data']}}" alt="">
+                        <img src="{{url_for('static', filename=suplementos[suplemento]['imagem'])}}" alt="">
                     </div>
-                    <div class="produto-preco">
+                    <div class="descricao-produto">
                         <p>{{suplementos[suplemento]['descricao']}}</p>
                     </div>
                 </a>

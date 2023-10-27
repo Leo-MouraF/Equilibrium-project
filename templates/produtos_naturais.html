@@ -39,15 +39,15 @@
         <h1>Produtos Naturais</h1>
         {% for produto in produtos_naturais %}
             <div class="produto">
-                <a href="">
+                <a href="{{url_for('single_produto', produto_id=produto)}}">
                     <div class="produto-preco">
                         <h4>{{produtos_naturais[produto]['nome']}}</h4>
                         <p>R${{produtos_naturais[produto]['preco']}}</p>
                     </div>
                     <div class="suplementos-img">
-                        <img src="data:{{ 'image/' + produtos_naturais[produto]['imagem']['tipo'] }};base64,{{ produtos_naturais[produto]['imagem']['imagem_data']}}" alt="">
+                        <img src="{{url_for('static', filename=produtos_naturais[produto]['imagem'])}}" alt="">
                     </div>
-                    <div class="produto-preco">
+                    <div class="descricao-produto">
                         <p>{{produtos_naturais[produto]['descricao']}}</p>
                     </div>
                 </a>

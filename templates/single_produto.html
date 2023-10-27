@@ -9,7 +9,7 @@
         <p class='descricaco-produto'>{{produto['descricao']}}</p>
     </div>
         <div class="suplementos-img">
-            <img src="data:{{ 'image/' + produto['imagem']['tipo'] }};base64,{{ produto['imagem']['imagem_data']}}" alt="">
+            <img src="{{ url_for('static', filename=produto['imagem'])}}" alt="">
         </div>
     </a>
     <form action=" {{url_for('update_produto', produto_id=produto['id']) }} " method="get">

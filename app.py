@@ -3,18 +3,14 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, abort, redirect, render_template, request, url_for
 
-from app_service import (
-    busca_produto,
-    filtrar_produto,
-    gerar_novo_produto,
-    processa_imagem,
-    service_delete_produto,
-    update_produto_service,
-)
+from app_service import (busca_produto, filtrar_produto, gerar_novo_produto,
+                         processa_imagem, service_delete_produto,
+                         update_produto_service)
 
 load_dotenv()
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'static/images/'
 
 app.secret_key = os.getenv("SECRET_KEY")
 
@@ -28,7 +24,7 @@ def index():
     Endpoint que renderiza a página inicial, separando dinamicamente os produtos
     por suas respectivas categorias (filtrar_produto).
     """
-
+    
     suplementos, produtos_naturais = filtrar_produto()
     return render_template(
         "index.html", suplementos=suplementos, produtos_naturais=produtos_naturais
@@ -119,13 +115,14 @@ def apply_update_produto(produto_id):
         produto = busca_produto(produto_id)
         data = request.form
         if not "imagem" in request.files or request.files["imagem"].filename == "":
-            img = produto["imagem"]["imagem_data"]
-            img_type = produto["imagem"]["tipo"]
-            produto_novo = update_produto_service(data, produto, img, img_type)
+            img = produto["imagem"]
+            produto_novo = update_produto_service(data, produto, img)
         else:
             img_form = request.files["imagem"]
-            img, img_type = processa_imagem(img_form)
-            produto_novo = update_produto_service(data, produto, img, img_type)
+            file_name = os.path.join(app.config['UPLOAD_FOLDER'], img_form.filename)
+            img_form.save(file_name)
+            img = processa_imagem(file_name)
+            produto_novo = update_produto_service(data, produto, img)
     else:
         return render_template("update_produto.html", produto=produto)
 
@@ -144,12 +141,15 @@ def submit_item():
         if not "imagem" in request.files or request.files["imagem"].filename == "":
             raise ValueError("Não foi inserida uma imagem.")
         else:
-            img_form = request.files["imagem"]
-            img, img_type = processa_imagem(img_form)
-            novo_item = gerar_novo_produto(data, img, img_type)
-            id = novo_item["id"]
 
-        return redirect(url_for("single_produto", produto_id=id))
+            img_form = request.files["imagem"]
+            file_name = os.path.join(app.config['UPLOAD_FOLDER'], img_form.filename)
+            img_form.save(file_name)
+            img = processa_imagem(file_name)
+            novo_item = gerar_novo_produto(data, img)
+            # id = novo_item
+
+        return redirect(url_for("single_produto", produto_id=novo_item))
     else:
         return render_template("submit_item.html")
 

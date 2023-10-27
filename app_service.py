@@ -3,14 +3,13 @@ import imghdr
 import json
 from uuid import uuid4
 
+from db_services import get_db_connection
 
-def gerar_novo_produto(data, img, img_type):
+
+def gerar_novo_produto(data, img):
     """
     Função responsável por adicionar um novo produto ao json.
     data => parâmetro que recebe o formulário.
-
-    img, img_type => recebem respectivamente: a imagem e o tipo da imagem, convertidas
-    em base 64 na função processa_imagem.
 
     Return:
     novo_produto, dicionário com todas as informações adicionadas, isso após ser
@@ -18,55 +17,39 @@ def gerar_novo_produto(data, img, img_type):
     """
     for item in data:
         if not data.get(item):
-            raise ValueError("Preencher todos os campos.")
+            raise ValueError("Necessário preencher todos os campos.")
 
+    id = str(uuid4())
     name = str(data.get("nome"))
     preco = float(data.get("valor"))
     description = str(data.get("descricao"))
+    imagem = img
     category = str(data.get("categoria"))
-    preco_formatado = f"{preco:.2f}"
-    novo_produto = {
-        "id": str(uuid4()),
-        "nome": name,
-        "preco": preco_formatado,
-        "descricao": description,
-        "imagem": {"imagem_data": img, "tipo": img_type},
-        "categoria": category,
-    }
 
-    produtos_json = ler_o_json()
-    escrever_no_json(produtos_json, novo_produto)
-    return novo_produto
+    conn = get_db_connection()
+    conn.execute(
+        'INSERT INTO produtos (id, nome, preco, imagem, descricao, categoria)'
+        'VALUES (?, ?, ?, ?, ?, ?)',
+        (id, name, preco, imagem, description, category)
+        )
+    conn.commit()
+    conn.close()
+
+    return id
 
 
 def processa_imagem(img):
     """
-    Função que faz o processamento da imagem.
-    img => Parâmetro que é a imagem vinda diretamente do formulário.
-
-    img_byte => converte a imagem para bytes.
-
-    image_data => retorna uma nova sequência de bytes em base 64. Em seguida, é
-    feita a conversão para uma strin Unicode, para que possa ser inserido ao json.
-    Biblioteca base64 => para conversão em bytes de base 64.
-    decode => para conversão em string Unicode.
-
-    image_type => Captura o tipo da imagem (png ou jpeg nesse caso).
-    Biblioteca imghdr => para a captura do tipo.
-
-
     Return:
-    a imagem processada e também o tipo dela.
+    Caminho da imagem
     """
 
-    img_byte = img.read()
-    image_data = base64.b64encode(img_byte).decode("utf-8")
-    image_type = imghdr.what(None, h=img_byte)
+    imagem_path = f'{img.replace("static", "")}'
 
-    return image_data, image_type
+    return imagem_path
 
 
-def update_produto_service(data, produto_a_alterar, img, img_type):
+def update_produto_service(data, produto_a_alterar, img):
     """
     Função que têm o mesmo principio da função 'gerar_novo_produto'.
     Diferenças: O valor vem carregado do json e as alterações feitas no formulário
@@ -81,46 +64,18 @@ def update_produto_service(data, produto_a_alterar, img, img_type):
     preco = data.get("valor")
     description = str(data.get("descricao"))
     category = str(data.get("categoria"))
-    produto_a_alterar = {
-        "id": produto_a_alterar["id"],
-        "nome": name,
-        "preco": preco,
-        "descricao": description,
-        "imagem": {"imagem_data": img, "tipo": img_type},
-        "categoria": category,
-    }
 
-    produtos_json = ler_o_json()
-    escrever_no_json(produtos_json, produto_a_alterar)
-
-    return produto_a_alterar
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE produtos SET nome=?, preco=?, descricao=?, imagem=?, categoria=? WHERE id=?',
+        (name, preco, description, img, category, produto_a_alterar['id'])
+        )
+    conn.commit()
+    produto = conn.execute('SELECT * FROM produtos WHERE id=?', (produto_a_alterar['id'],)).fetchone()
+    conn.close()
 
 
-def escrever_no_json(produtos, novo_produto):
-    """
-    Função que permite a inserção de dados no arquivo json.
-    Recebe o produto a ser inserido e filtra pelo id. Caso não haja aquele id
-    no arquivo ainda, é feito um novo objeto.
-    """
-
-    with open("data/produtos.json", "w", encoding="utf-8") as arquivo_produtos:
-        produtos[novo_produto["id"]] = novo_produto
-        novo_produto_json = json.dumps(produtos, indent=4, ensure_ascii=False)
-        arquivo_produtos.write(novo_produto_json)
-
-
-def ler_o_json():
-    """
-    Função responsável pela leitura do arquivo json e retornar os produtos já
-    existentes.
-
-    Return:
-    Um dicionário com todos os produtos existentes.
-    """
-
-    with open("data/produtos.json", "r", encoding="utf-8") as arquivo_produtos:
-        produtos_dicionario = json.load(arquivo_produtos)
-        return produtos_dicionario
+    return dict(produto)
 
 
 def busca_produto(produto_id):
@@ -133,13 +88,12 @@ def busca_produto(produto_id):
     O dicionário com o id especificado.
     """
 
-    dados = ler_o_json()
-    produto = dados.get(produto_id)
+    conn = get_db_connection()
+    produto = conn.execute('SELECT * FROM produtos WHERE id=?', (produto_id,)).fetchone()
+    produto_info = dict(produto)
+    print(produto_info)
 
-    for item in dados:
-        if dados[item]["id"] == produto["id"]:
-            produto_a_mostrar = dados[item]
-    return produto_a_mostrar
+    return produto_info
 
 
 def service_delete_produto(produto_id):
@@ -149,13 +103,14 @@ def service_delete_produto(produto_id):
     id do produto.
     Em seguida é reescrito todo o arquivo, sem o produto deletado.
     """
+    # conn = get_db_connection()
+    # produtos = conn.execute('SELECT * FROM produtos').fetchall()
+    # produtos_dict = dict(produtos)
+    # del produtos_dict[produto_id]
 
-    produtos_json = ler_o_json()
-    del produtos_json[produto_id]
-
-    with open("data/produtos.json", "w", encoding="utf-8") as arquivo_produtos:
-        deletou_produto = json.dumps(produtos_json, indent=4, ensure_ascii=False)
-        arquivo_produtos.write(deletou_produto)
+    # with open("data/produtos.json", "w", encoding="utf-8") as arquivo_produtos:
+    #     deletou_produto = json.dumps(produtos_json, indent=4, ensure_ascii=False)
+    #     arquivo_produtos.write(deletou_produto)
 
 
 def filtrar_produto():
@@ -165,15 +120,17 @@ def filtrar_produto():
     Return:
     Uma tupla de dicionários para cada categoria.
     """
-
+    conn = get_db_connection()
+    produtos = conn.execute('SELECT * FROM produtos').fetchall()
     suplementos_dict = {}
     prdt_naturais_dict = {}
-    produtos_json = ler_o_json()
+    # produtos_json = ler_o_json()
 
-    for produto_id, produto_info in produtos_json.items():
+    for produto in produtos:
+        produto_info = dict(produto)
         if produto_info["categoria"] == "suplemento":
-            suplementos_dict[produto_id] = produto_info
+            suplementos_dict[produto['id']] = produto_info
         else:
-            prdt_naturais_dict[produto_id] = produto_info
+            prdt_naturais_dict[produto['id']] = produto_info
 
     return suplementos_dict, prdt_naturais_dict

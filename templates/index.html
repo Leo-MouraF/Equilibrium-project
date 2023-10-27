@@ -51,10 +51,10 @@
                 <a href="{{ url_for('single_produto', produto_id=suplemento)}}">
                     <div class="produto-preco">
                         <h4>{{suplementos[suplemento]['nome']}}</h4>
-                        <p>R${{suplementos[suplemento]['preco']}}</p>
+                        <p>R${{"%.2f"|format(suplementos[suplemento]['preco'])}}</p>
                     </div>
                     <div class="suplementos-img">
-                        <img src="data:{{ 'image/' + suplementos[suplemento]['imagem']['tipo'] }};base64,{{ suplementos[suplemento]['imagem']['imagem_data']}}" alt="">
+                        <img src="{{url_for('static', filename=suplementos[suplemento]['imagem'])}}" alt="">
                     </div>
                     <div class="produto-preco">
                         <p>{{suplementos[suplemento]['descricao'][:20]}}...</p>
@@ -81,7 +81,7 @@
                         <p>R${{produtos_naturais[produto]['preco']}}</p>
                     </div>
                     <div class="suplementos-img">
-                        <img src="data:{{ 'image/' + produtos_naturais[produto]['imagem']['tipo'] }};base64,{{ produtos_naturais[produto]['imagem']['imagem_data']}}" alt="">
+                        <img src="{{url_for('static', filename=produtos_naturais[produto]['imagem'])}}" alt="">
                     </div>
                     <div class="produto-preco">
                         {% if produtos_naturais[produto]['descricao']|length > 20 %}

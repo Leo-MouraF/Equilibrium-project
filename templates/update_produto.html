@@ -25,7 +25,7 @@
                 </span>
             </div>
             <div class="suplementos-img">
-                <img src="data:{{ 'image/' + produto['imagem']['tipo'] }};base64,{{ produto['imagem']['imagem_data']}}">
+                <img src="{{url_for('static', filename=produto['imagem'])}}">
             </div>
             <div>
                 <span>

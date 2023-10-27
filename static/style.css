@@ -165,11 +165,19 @@ img {
 
 .preco-produto {
     font-size: 1.5em;
+    padding: 15px;
 }
 
-.descricaco-produto {
-    margin: 0 auto;
-    padding: 35px;
+.descricao-produto {
+    background: #222222;
+}
+
+.descricao-produto p {
+    display: inline-block;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 15px;
     text-align: justify;
 }
 
