@@ -223,7 +223,17 @@ img {
 
 .suplementos-img img {
     width: 100%;
-    height: 250px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.suplementos-img-single-produto {
+    height: 100%;
+}
+
+.suplementos-img-single-produto img{
+    width: 100%;
+    height: 20%;
     object-fit: cover;
 }
 

@@ -5,10 +5,10 @@
     <a href="">
     <div class="produto-preco">
         <h4>{{produto['nome']}}</h4>
-        <p class='preco-produto'>R${{produto['preco']}}</p>
+        <p class='preco-produto'>R${{"%.2f"|format(produto['preco'])}}</p>
         <p class='descricaco-produto'>{{produto['descricao']}}</p>
     </div>
-        <div class="suplementos-img">
+        <div class="suplementos-img-single-produto">
             <img src="{{ url_for('static', filename=produto['imagem'])}}" alt="">
         </div>
     </a>

@@ -15,7 +15,7 @@
             <div>
                 <span>
                     <label for="valor"><h4>Valor: </h4></label>
-                    <input type="text" name="valor" id="valor" value={{produto['preco']}} placeholder="Digite o valor do produto">
+                    <input type="text" name="valor" id="valor" value={{"%.2f"|format(produto['preco'])}} placeholder="Digite o valor do produto">
                 </span>
             </div>
             <div>

@@ -42,7 +42,7 @@
                 <a href="{{url_for('single_produto', produto_id=produto)}}">
                     <div class="produto-preco">
                         <h4>{{produtos_naturais[produto]['nome']}}</h4>
-                        <p>R${{produtos_naturais[produto]['preco']}}</p>
+                        <p>R${{"%.2f"|format(produtos_naturais[produto]['preco'])}}</p>
                     </div>
                     <div class="suplementos-img">
                         <img src="{{url_for('static', filename=produtos_naturais[produto]['imagem'])}}" alt="">

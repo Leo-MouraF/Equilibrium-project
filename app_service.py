@@ -1,6 +1,4 @@
-import base64
-import imghdr
-import json
+import hashlib
 from uuid import uuid4
 
 from db_services import get_db_connection
@@ -91,26 +89,20 @@ def busca_produto(produto_id):
     conn = get_db_connection()
     produto = conn.execute('SELECT * FROM produtos WHERE id=?', (produto_id,)).fetchone()
     produto_info = dict(produto)
-    print(produto_info)
 
     return produto_info
 
 
 def service_delete_produto(produto_id):
     """
-    Função que remove um produto do arquivo json a partir do id.
-    Com os produtos recuperados em 'produtos_json', é feita a deleção direta no
-    id do produto.
-    Em seguida é reescrito todo o arquivo, sem o produto deletado.
+    Função que deleta o arquivo, a partir da pesquisa por id, da tabela produtos.
     """
-    # conn = get_db_connection()
-    # produtos = conn.execute('SELECT * FROM produtos').fetchall()
-    # produtos_dict = dict(produtos)
-    # del produtos_dict[produto_id]
-
-    # with open("data/produtos.json", "w", encoding="utf-8") as arquivo_produtos:
-    #     deletou_produto = json.dumps(produtos_json, indent=4, ensure_ascii=False)
-    #     arquivo_produtos.write(deletou_produto)
+    conn = get_db_connection()
+    produto_a_deletar = conn.execute('DELETE FROM produtos WHERE id=?', (produto_id,))
+    conn.commit()
+    conn.close()
+    
+    return produto_a_deletar
 
 
 def filtrar_produto():
@@ -124,7 +116,6 @@ def filtrar_produto():
     produtos = conn.execute('SELECT * FROM produtos').fetchall()
     suplementos_dict = {}
     prdt_naturais_dict = {}
-    # produtos_json = ler_o_json()
 
     for produto in produtos:
         produto_info = dict(produto)
@@ -134,3 +125,24 @@ def filtrar_produto():
             prdt_naturais_dict[produto['id']] = produto_info
 
     return suplementos_dict, prdt_naturais_dict
+
+
+def verificar_login(data):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    if cursor.execute("SELECT senha_salt FROM usuario WHERE email=?", (data['email'],)):
+        salt_db = cursor.fetchone()[0]
+        hashed_input_password = hashlib.pbkdf2_hmac('sha256', data['senha'].encode('utf-8'), salt_db, 100000)
+        hashed_password_hexadecimal = hashed_input_password.hex()
+
+        cursor.execute("SELECT * FROM usuario WHERE email=? AND senha_hash=?", (data['email'], hashed_password_hexadecimal))
+        user_data = cursor.fetchone()
+
+        if user_data:
+            print('Deu certo o login')
+            usuario_id = cursor.execute('SELECT id FROM usuario WHERE email=?', (data['email'],) ) 
+            return usuario_id
+        else:
+            raise ValueError('E-mail ou senha incorretos.')
+    else:
+        raise ValueError('Usuário não encontrado.') 

@@ -5,7 +5,7 @@ from flask import Flask, abort, redirect, render_template, request, url_for
 
 from app_service import (busca_produto, filtrar_produto, gerar_novo_produto,
                          processa_imagem, service_delete_produto,
-                         update_produto_service)
+                         update_produto_service, verificar_login)
 
 load_dotenv()
 
@@ -35,12 +35,9 @@ def index():
 def efetuar_login():
     if request.method == "POST":
         data = request.form
-        if data.get("email") != os.getenv("EMAIL_ADMIN") or data.get(
-            "senha"
-        ) != os.getenv("PASSWORD_ADMIN"):
-            return f"Credenciais incorretas.", abort(404)
+        verificar_login(data)
         return redirect(url_for("index"))
-    return render_template("login.html")
+    return render_template('login.html')
 
 
 @app.route("/suplementos")
@@ -147,7 +144,6 @@ def submit_item():
             img_form.save(file_name)
             img = processa_imagem(file_name)
             novo_item = gerar_novo_produto(data, img)
-            # id = novo_item
 
         return redirect(url_for("single_produto", produto_id=novo_item))
     else:
@@ -162,3 +158,8 @@ def delete_produto(produto_id):
 
     service_delete_produto(produto_id)
     return redirect(url_for("index"))
+
+
+@app.route("/error", methods=['GET'])
+def mostrar_erro():
+    return render_template('error.html')
