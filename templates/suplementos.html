@@ -1,39 +1,6 @@
-<body>
-    <div class="topo-bg">
-        <div class="topo-info">
-            <div class="topo-logo">
-                <h1>EQUILIBRIUM</h1>
-                <h6>Desde 2006</h6>
-            </div>
-            <div class="topo-endereco">
-                <p>Av. Getúlio Vargas - 141
-                    Magalhães - Laguna/SC</p>
-            </div>
-        </div>
-    </div>
+{% extends "layout.html" %}
 
-    <header>
-        <div class="menu-bg">
-            <div class="menu">
-                <div class="info-menu">
-                    <p>Suplementos e Produtos Naturais</p>
-                </div>
-            <nav class="menu-nav">
-                <ul>
-                    <li><a href={{ url_for('index')}}>Home</a></li>
-                    <li><a href={{ url_for('suplementos')}}>Suplementos</a></li>
-                    <li><a href={{ url_for('produtos_naturais')}}>Produtos Naturais</a></li>
-                    <li><a href="#contato">Contato</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>  
-    </header>
-</body>
-
-{% extends "index.html" %}
-
-{% block body %}
+{% block content %}
 
 <section>
     <div class="suplementos" id="suplementos">

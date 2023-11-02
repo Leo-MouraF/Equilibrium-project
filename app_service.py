@@ -130,19 +130,30 @@ def filtrar_produto():
 def verificar_login(data):
     conn = get_db_connection()
     cursor = conn.cursor()
-    if cursor.execute("SELECT senha_salt FROM usuario WHERE email=?", (data['email'],)):
-        salt_db = cursor.fetchone()[0]
-        hashed_input_password = hashlib.pbkdf2_hmac('sha256', data['senha'].encode('utf-8'), salt_db, 100000)
-        hashed_password_hexadecimal = hashed_input_password.hex()
 
-        cursor.execute("SELECT * FROM usuario WHERE email=? AND senha_hash=?", (data['email'], hashed_password_hexadecimal))
-        user_data = cursor.fetchone()
+    cursor.execute("SELECT senha_salt FROM usuario WHERE email=?", (data['email'],))
+    salt_db = cursor.fetchone()
+       
+    if not salt_db:
+        raise ValueError('Usuário ou senha incorretos.')
 
-        if user_data:
-            print('Deu certo o login')
-            usuario_id = cursor.execute('SELECT id FROM usuario WHERE email=?', (data['email'],) ) 
-            return usuario_id
-        else:
-            raise ValueError('E-mail ou senha incorretos.')
+    salt_db = bytes(salt_db[0])
+    hashed_input_password = hashlib.pbkdf2_hmac('sha256', data['senha'].encode('utf-8'), salt_db, 100000)
+    hashed_password_hexadecimal = hashed_input_password.hex()
+
+    cursor.execute("SELECT * FROM usuario WHERE email=? AND senha_hash=?", (data['email'], hashed_password_hexadecimal))
+    user_data = cursor.fetchone()
+
+    if user_data:
+        print('Deu certo o login')
+        usuario_id = cursor.execute('SELECT id FROM usuario WHERE email=?', (data['email'],) ) 
+        return usuario_id
     else:
-        raise ValueError('Usuário não encontrado.') 
+        return ValueError('E-mail ou senha incorretos.')
+    
+
+# def retornar_erro():
+#     dict_erros = {
+#         ValueError: 'Os dados inseridos estão incorretos',
+#         TypeError: 'Tipo de dado incorreto'}
+#     return dict_erros

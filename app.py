@@ -6,10 +6,14 @@ from flask import Flask, abort, redirect, render_template, request, url_for
 from app_service import (busca_produto, filtrar_produto, gerar_novo_produto,
                          processa_imagem, service_delete_produto,
                          update_produto_service, verificar_login)
+from flask_session import Session
 
 load_dotenv()
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 app.config['UPLOAD_FOLDER'] = 'static/images/'
 
 app.secret_key = os.getenv("SECRET_KEY")
@@ -35,8 +39,13 @@ def index():
 def efetuar_login():
     if request.method == "POST":
         data = request.form
-        verificar_login(data)
-        return redirect(url_for("index"))
+        if data['email'] == "" or data['senha'] == "":
+            raise ValueError('Um dos campos está vazio.')
+        else:
+            login = verificar_login(data)
+        if login:
+            session['email'] = data['email']
+            return redirect(url_for("index"))
     return render_template('login.html')
 
 
@@ -160,6 +169,6 @@ def delete_produto(produto_id):
     return redirect(url_for("index"))
 
 
-@app.route("/error", methods=['GET'])
-def mostrar_erro():
-    return render_template('error.html')
+@app.route("/error/<error>", methods=['GET'])
+def mostrar_erro(error):
+    return render_template('error.html', error=error)
