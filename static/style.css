@@ -134,10 +134,6 @@ img {
     min-width: 200px;
 }
 
-.produto a {
-    color: #54A316;
-}
-
 .produto button {
     width: 100%;
     border: none;
@@ -153,6 +149,24 @@ img {
     cursor: pointer;
 }
 
+.manda-mensagem {
+    display: block;
+    width: 100%;
+    border: none;
+    text-align: center;
+    padding: 10px;
+    font-size: 1.25em;
+    background: #54A316;
+    border: 0.5px solid #222222;
+    color: #222222;
+}
+
+.manda-mensagem:hover {
+    background: #222222;
+    color: #54A316;
+    cursor: pointer;
+}
+
 .produto-preco {
     display: flex;
     flex-wrap: wrap;
@@ -161,6 +175,46 @@ img {
     padding: 10px;
     gap: 30px;
     background: #222222;
+}
+
+.opcoes-admin {
+    display: inline-block;
+    color: #54A316;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 15px;
+    text-align: justify;
+}
+
+.opcoes-admin p, a {
+    color: #54A316;
+}
+
+.produto-preco table {
+    /* display: flex; */
+    width: 100%;
+    font-size: 1.25em;
+    padding: 15px;
+    border: 2px solid #54A316;
+}
+
+.produto-preco tr {
+    color: #DBD7D7;
+    text-wrap: wrap;
+    width: 50%;
+}
+
+.produto-preco table td {
+    color: #54A316;
+    border-bottom: 2px solid #54A316;
+    height: 50px;
+    text-align: center;
+}
+
+.produto-preco td a {
+    color: #54A316;
+    text-decoration: none;
 }
 
 .preco-produto {
@@ -203,9 +257,6 @@ img {
     padding-top: 15px;
 }
 
-.produto-single a {
-    color: #54A316;
-}
 
 .produto-single button {
     width: 100%;

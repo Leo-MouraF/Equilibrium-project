@@ -1,4 +1,5 @@
 import hashlib
+from json import loads
 from uuid import uuid4
 
 from db_services import get_db_connection
@@ -128,6 +129,10 @@ def filtrar_produto():
 
 
 def verificar_login(data):
+    """
+    Faz a verificação do hash da senha do banco de dados com a inserida pelo 
+    usuário, utilizando o email inserido para buscar na tabela.
+    """
     conn = get_db_connection()
     cursor = conn.cursor()
 
@@ -143,13 +148,19 @@ def verificar_login(data):
 
     cursor.execute("SELECT * FROM usuario WHERE email=? AND senha_hash=?", (data['email'], hashed_password_hexadecimal))
     user_data = cursor.fetchone()
-
     if user_data:
-        print('Deu certo o login')
-        usuario_id = cursor.execute('SELECT id FROM usuario WHERE email=?', (data['email'],) ) 
-        return usuario_id
-    else:
-        return ValueError('E-mail ou senha incorretos.')
+        return user_data['id']
+    raise ValueError('E-mail ou senha incorretos.')
+
+
+def processa_hidden_input(data):
+    """
+    Corrige as aspas enviadas via formulário para que seja um objeto json 
+    correto e envia novamente para a construção do objeto session.
+    """
+    str_json = data['produto'].replace("'", "\"")
+    dict_json = loads(str_json)
+    return dict_json
     
 
 # def retornar_erro():

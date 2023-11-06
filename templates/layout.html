@@ -29,24 +29,36 @@
                 <p>Suplementos e Produtos Naturais</p>
             </div>
         <nav class="menu-nav">
+            {% block nav %}
             <ul>
                 <li><a href={{ url_for('index')}}>Home</a></li>
                 <li><a href={{ url_for('suplementos')}}>Suplementos</a></li>
                 <li><a href={{ url_for('produtos_naturais')}}>Produtos Naturais</a></li>
                 <li><a href="#contato">Contato</a></li>
             </ul>
+            {% endblock %}
         </nav>
     </div>
 </div>  
 </header>
+{% if session['email'] == 'email@gmail.com' %}
+    <div class='descricao-produto'>
+        <p>Logado como: {{email}}</p>
+        <p><a href='/logout'>Logout</a></p>
+        <p><a href='/submit_item'>Adicionar Produto</a>
+    </div>
+    
+{% endif %}
 
     {% block content %}{% endblock %}
     <section>
-        <div class="carrinho-bg">
-            <div class="carrinho">
-                <i class="fa-solid fa-cart-shopping"></i>
+        <a href="{{ url_for('adicionar_ao_carrinho')}}">
+            <div class="carrinho-bg">
+                <div class="carrinho">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
             </div>
-        </div>
+        </a>
     </section>
 
     <section>
@@ -64,7 +76,7 @@
                 <div class="contato-conteudo">
                     <span>
                         <!-- <a href="tel:+5548991250202">(48) 9 9125-0202</a> -->
-                        <a href="https://api.whatsapp.com/send?phone=+5548991250202&text=urlencodedtext">
+                        <a target='_blank' href="https://api.whatsapp.com/send?phone=+5548991250202&text=Olá! Poderia me ajudar?">
                             <i class="fa-brands fa-whatsapp"></i>
                             (48) 9 9125-0202
                         </a>

@@ -1,26 +1,27 @@
 import os
 
 from dotenv import load_dotenv
-from flask import Flask, abort, redirect, render_template, request, url_for
+from flask import (Flask, abort, redirect, render_template, request, session,
+                   url_for)
 
 from app_service import (busca_produto, filtrar_produto, gerar_novo_produto,
-                         processa_imagem, service_delete_produto,
-                         update_produto_service, verificar_login)
-from flask_session import Session
+                         processa_hidden_input, processa_imagem,
+                         service_delete_produto, update_produto_service,
+                         verificar_login)
 
 load_dotenv()
 
 app = Flask(__name__)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
 app.config['UPLOAD_FOLDER'] = 'static/images/'
-
 app.secret_key = os.getenv("SECRET_KEY")
 
 if __name__ == "__main__":
     app.run()
 
+
+@app.before_request
+def antes_da_solicitacao():
+    session.modified = True
 
 @app.route("/")
 def index():
@@ -28,26 +29,48 @@ def index():
     Endpoint que renderiza a página inicial, separando dinamicamente os produtos
     por suas respectivas categorias (filtrar_produto).
     """
+    email = ''
+    if 'carrinho' not in session:
+        session['carrinho'] = {}
     
-    suplementos, produtos_naturais = filtrar_produto()
-    return render_template(
-        "index.html", suplementos=suplementos, produtos_naturais=produtos_naturais
-    )
+    if 'email' in session:
+        email = session['email']
+        suplementos, produtos_naturais = filtrar_produto()
+        return render_template(
+            "index.html", 
+            suplementos=suplementos, 
+            produtos_naturais=produtos_naturais,
+            email=email
+        )
+    else: 
+        suplementos, produtos_naturais = filtrar_produto()
+        return render_template(
+            "index.html", 
+            suplementos=suplementos, 
+            produtos_naturais=produtos_naturais
+            )
 
 
 @app.route("/login", methods=["GET", "POST"])
 def efetuar_login():
+    """
+    Endpoint para realização do login, com email e senha.
+    """
     if request.method == "POST":
         data = request.form
         if data['email'] == "" or data['senha'] == "":
             raise ValueError('Um dos campos está vazio.')
         else:
-            login = verificar_login(data)
-        if login:
+            verificar_login(data)
             session['email'] = data['email']
             return redirect(url_for("index"))
     return render_template('login.html')
 
+
+@app.route('/logout')
+def logout():
+    session.pop('email', None)
+    return redirect(url_for('index'))
 
 @app.route("/suplementos")
 def suplementos():
@@ -101,13 +124,11 @@ def update_produto(produto_id):
     Endpoint que renderiza página com os dados carregados nos respectivos inputs
     para que seja feita possíveis alterações.
     """
+    produto = busca_produto(produto_id)
 
-    if request.method == "GET":
-        produto = busca_produto(produto_id)
-
-        if produto == None:
-            abort(404)
-        return render_template("update_produto.html", produto=produto)
+    if produto == None:
+        abort(404)
+    return render_template("update_produto.html", produto=produto)
 
 
 @app.route("/apply_update_produto/<produto_id>", methods=["POST"])
@@ -168,6 +189,37 @@ def delete_produto(produto_id):
     service_delete_produto(produto_id)
     return redirect(url_for("index"))
 
+
+@app.route("/adicionar_ao_carrinho", methods=['GET', 'POST'])
+def adicionar_ao_carrinho():
+    if request.method == 'POST':
+        data = request.form
+        print(data)
+        item_processado = processa_hidden_input(data)
+        item_processado['preco'] = float(item_processado['preco'])
+        if item_processado['id'] not in session['carrinho']:
+            session['carrinho'].update({
+                item_processado['id']:{
+                'id':item_processado['id'], 
+                'nome':item_processado['nome'],
+                'preco':item_processado['preco'],
+                'descricao': item_processado['descricao']
+                }
+                })
+            print(session['carrinho'])
+            print(type(session['carrinho']))
+            return render_template('carrinho.html', produto=session['carrinho'])
+    return render_template('carrinho.html', produto=session['carrinho'])
+
+@app.route('/remove_do_carrinho', methods=['GET', 'POST'])
+def remover_do_carrinho():
+    item_id = request.form.get('item_id')
+
+    if item_id in session['carrinho']:
+        del session['carrinho'][item_id]
+
+
+    return render_template('carrinho.html', produto=session['carrinho'])
 
 @app.route("/error/<error>", methods=['GET'])
 def mostrar_erro(error):

@@ -1,7 +1,7 @@
 {% extends 'layout.html'%}
 
 {% block content %}
-
+{% if session['email'] == 'email@gmail.com' %}
 <div class="adicionar-produto">
     <div class="info-produto">
         <h2>Adicionar um produto: </h2>
@@ -45,5 +45,10 @@
         </form>
     </div>
 </div>
+{% else %}
+    <div class="info-produto">
+        <h1>Você não tem autorização para acessar esta página</h1>
+    </div>
+{% endif %}
 
 {% endblock %}

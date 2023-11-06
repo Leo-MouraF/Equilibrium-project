@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block content%}
+<section>
+    <div class='produto-preco'>
+        <table>
+            <tr>
+                <th>Nome</th>
+                <th>Valor</th>
+                <th>Descrição</th>
+                <th></th>
+            </tr>
+            {% for item in produto %}
+            <tr>
+                    <td><a href="{{ url_for('single_produto', produto_id=item)}}">{{ produto[item]['nome']}}</a></td>
+                    <td>R${{produto[item]['preco']}}</td>
+                    <td>{{ produto[item]['descricao']}}</td>
+                    <form action=" {{url_for('remover_do_carrinho')}}" method='post'>
+                        <input type='hidden' name='item_id' value='{{ item }}'>
+                        <td><button type='submit'>Remover</button></td>
+                    </form>
+                </tr>
+            {% endfor%}
+            </table>
+            <table>
+                <tr>
+                    <th>Total</th>
+                </tr>
+                <tr>
+                    {% set preco_total=0 %}
+                    {% for item in produto %}
+                        {% set preco_total = preco_total + produto[item]['preco'] %}
+                        {% endfor %}
+                    <td>{{ "%.2f"|format(preco_total) }}</td>
+                    <form action=" {{url_for('adicionar_ao_carrinho')}}" method='post'>
+                        <input type='hidden' name='item_id' value='{{ item }}'>
+                        <td><button type='submit'>Esvaziar carrinho</button></td>
+                    </form>
+                    <form action=" {{url_for('adicionar_ao_carrinho')}}" method='post'>
+                        <input type='hidden' name='item_id' value='{{ item }}'>
+                        <td><button type='submit'>Comprar itens</button></td>
+                    </form>
+                </tr>
+            </table>
+        </div>
+    </section>
+{% endblock %}

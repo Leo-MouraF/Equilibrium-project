@@ -19,8 +19,20 @@
                         <p>{{suplementos[suplemento]['descricao']}}</p>
                     </div>
                 </a>
-                <button>Comprar</button>
-                <button>Adicionar ao carrinho</button>
+                {% if session['email'] == 'email@gmail.com' %}
+                <form action=" {{url_for('update_produto', produto_id=suplementos[suplemento]['id']) }} " method="get">
+                    <button type="submit">Alterar</button>
+                </form>
+                <form action=" {{url_for('delete_produto', produto_id=suplementos[suplemento]['id']) }} " method="post">
+                    <button type="submit">Deletar</button>
+                </form>
+                {% else %}
+                <a class='manda-mensagem' target='_blank' href="https://api.whatsapp.com/send?phone=+5548991250202&text=Olá! Gostaria de comprar este produto:%0a{{suplementos[suplemento]['nome']}}%0aR${{suplementos[suplemento]['preco']}}">Comprar</a>
+                <form action=" {{url_for('adicionar_ao_carrinho')}}" method='post'>
+                    <input name='produto' type="hidden" value='{{suplementos[suplemento]}}'>
+                    <button type='submit'>Adicionar ao carrinho</button>
+                </form>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
