@@ -161,6 +161,10 @@ def processa_hidden_input(data):
     str_json = data['produto'].replace("'", "\"")
     dict_json = loads(str_json)
     return dict_json
+
+def processa_limpa_carrinho(data):
+    str_produto = data.replace('"', '')
+    return str_produto
     
 
 # def retornar_erro():

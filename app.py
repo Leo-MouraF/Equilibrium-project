@@ -6,8 +6,8 @@ from flask import (Flask, abort, redirect, render_template, request, session,
 
 from app_service import (busca_produto, filtrar_produto, gerar_novo_produto,
                          processa_hidden_input, processa_imagem,
-                         service_delete_produto, update_produto_service,
-                         verificar_login)
+                         processa_limpa_carrinho, service_delete_produto,
+                         update_produto_service, verificar_login)
 
 load_dotenv()
 
@@ -192,9 +192,9 @@ def delete_produto(produto_id):
 
 @app.route("/adicionar_ao_carrinho", methods=['GET', 'POST'])
 def adicionar_ao_carrinho():
+    preco_total = session.get('preco_total', 0)
     if request.method == 'POST':
         data = request.form
-        print(data)
         item_processado = processa_hidden_input(data)
         item_processado['preco'] = float(item_processado['preco'])
         if item_processado['id'] not in session['carrinho']:
@@ -206,20 +206,36 @@ def adicionar_ao_carrinho():
                 'descricao': item_processado['descricao']
                 }
                 })
+            preco_total += item_processado['preco']
+            session['preco_total'] = preco_total
             print(session['carrinho'])
-            print(type(session['carrinho']))
-            return render_template('carrinho.html', produto=session['carrinho'])
-    return render_template('carrinho.html', produto=session['carrinho'])
+        return render_template('carrinho.html', produto=session['carrinho'], preco_total=preco_total)
+    
+    if not session['carrinho']:
+        preco_total = session.pop('preco_total', None)
+
+    return render_template('carrinho.html', produto=session['carrinho'], preco_total=preco_total)
 
 @app.route('/remove_do_carrinho', methods=['GET', 'POST'])
 def remover_do_carrinho():
     item_id = request.form.get('item_id')
+    preco_total = float(request.form.get('total'))
 
     if item_id in session['carrinho']:
+        preco_total -= float(session['carrinho'][item_id]['preco'])
         del session['carrinho'][item_id]
+    
+    if not session['carrinho']:
+        preco_total = session.pop('preco_total', None)
 
+    return render_template('carrinho.html', produto=session['carrinho'], preco_total=preco_total)
 
-    return render_template('carrinho.html', produto=session['carrinho'])
+@app.route('/esvazia_carrinho', methods=['GET', 'POST'])
+def esvaziar_carrinho():
+    if request.method == 'POST':
+        session.pop('carrinho', None)
+        session.pop('preco_total', None)
+    return redirect(url_for('index'))
 
 @app.route("/error/<error>", methods=['GET'])
 def mostrar_erro(error):
