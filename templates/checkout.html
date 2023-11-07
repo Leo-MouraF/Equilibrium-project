@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class='produto-preco'>
+        <h1> Confirmar Compra </h1>
+        <table>
+            <tr>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Categoria</th>
+            </tr>
+        {% for item in mensagem_dict %}
+        <tr>
+            <td><a href="{{ url_for('single_produto', produto_id=item)}}">{{ mensagem_dict[item]['nome']}}</a></td>
+            <td>R${{mensagem_dict[item]['preco']}}</td>
+            <td>{{ mensagem_dict[item]['categoria']}}</td>
+        </tr>
+        {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>Total</th>
+            </tr>
+            <tr>
+                {% if 'preco_total' in session %}
+                <td>{{ "%.2f"|format(session['preco_total']) }}</td>
+                {% else %}
+                <td> Seu carrinho está vazio </td>
+                {% endif %}
+            </tr>
+        </table>
+    </div>
+    <div><a href='{{url_for("adicionar_ao_carrinho")}}'>Cancelar</a></div>
+    <div><a class='manda-mensagem' target='_blank' href="https://api.whatsapp.com/send?phone=+5548991250202&text={{mensagem_str}}">Enviar</a></div>
+{% endblock %}

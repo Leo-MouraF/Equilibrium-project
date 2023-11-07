@@ -162,9 +162,13 @@ def processa_hidden_input(data):
     dict_json = loads(str_json)
     return dict_json
 
-def processa_limpa_carrinho(data):
-    str_produto = data.replace('"', '')
-    return str_produto
+def processa_carrinho(data):
+    try:
+        dict_json = loads(data)
+        return dict_json
+    except:
+        print(f"Erro ao decodificar JSON")
+        return None
     
 
 # def retornar_erro():

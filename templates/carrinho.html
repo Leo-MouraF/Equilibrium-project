@@ -1,4 +1,5 @@
 {% extends 'layout.html' %}
+{% set carrinho = session["carrinho"]%}
 {% block content%}
 <section>
     <div class='produto-preco'>
@@ -7,16 +8,18 @@
                 <th>Nome</th>
                 <th>Valor</th>
                 <th>Descrição</th>
+                <th>Categoria</th>
                 <th></th>
             </tr>
-            {% for item in produto %}
+            {% for item in carrinho %}
             <tr>
-                    <td><a href="{{ url_for('single_produto', produto_id=item)}}">{{ produto[item]['nome']}}</a></td>
-                    <td>R${{produto[item]['preco']}}</td>
-                    <td>{{ produto[item]['descricao']}}</td>
+                    <td><a href="{{ url_for('single_produto', produto_id=item)}}">{{ carrinho[item]['nome']}}</a></td>
+                    <td>R${{carrinho[item]['preco']}}</td>
+                    <td>{{ carrinho[item]['descricao']}}</td>
+                    <td>{{ carrinho[item]['categoria']}}</td>
                     <form action=" {{url_for('remover_do_carrinho')}}" method='post'>
                         <input type='hidden' name='item_id' value='{{ item }}'>
-                        <input type='hidden' name='total' value='{{ preco_total }}'>
+                        <input type='hidden' name='total' value='{{ session["preco_total"] }}'>
                         <td><button type='submit'>Remover</button></td>
                     </form>
                 </tr>
@@ -27,19 +30,19 @@
                     <th>Total</th>
                 </tr>
                 <tr>
-                    {% if preco_total %}
-                    <td>{{ "%.2f"|format(preco_total) }}</td>
+                    {% if "preco_total" in session %}
+                    <td>{{ "%.2f"|format(session["preco_total"]) }}</td>
+                    <form action=" {{url_for('esvaziar_carrinho')}}" method='post'>
+                        <input type='hidden' name='carrinho_a_limpar' value='{{ carrinho }}'>
+                        <td><button type='submit'>Esvaziar carrinho</button></td>
+                    </form>
+                    <form action=" {{url_for('comprar_carrinho')}}" method='post'>
+                        <input type='hidden' name='carrinho' value='{{ carrinho | tojson }}'>
+                        <td><button type='submit'>Comprar itens</button></td>
+                    </form>
                     {% else %}
                     <td> Seu carrinho está vazio </td>
                     {% endif %}
-                    <form action=" {{url_for('esvaziar_carrinho')}}" method='post'>
-                        <input type='hidden' name='carrinho_a_limpar' value='{{ produto }}'>
-                        <td><button type='submit'>Esvaziar carrinho</button></td>
-                    </form>
-                    <form action=" {{url_for('adicionar_ao_carrinho')}}" method='post'>
-                        <input type='hidden' name='item_id' value='{{ item }}'>
-                        <td><button type='submit'>Comprar itens</button></td>
-                    </form>
                 </tr>
             </table>
         </div>

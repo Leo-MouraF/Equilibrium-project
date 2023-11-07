@@ -5,8 +5,8 @@ from flask import (Flask, abort, redirect, render_template, request, session,
                    url_for)
 
 from app_service import (busca_produto, filtrar_produto, gerar_novo_produto,
-                         processa_hidden_input, processa_imagem,
-                         processa_limpa_carrinho, service_delete_produto,
+                         processa_carrinho, processa_hidden_input,
+                         processa_imagem, service_delete_produto,
                          update_produto_service, verificar_login)
 
 load_dotenv()
@@ -203,32 +203,32 @@ def adicionar_ao_carrinho():
                 'id':item_processado['id'], 
                 'nome':item_processado['nome'],
                 'preco':item_processado['preco'],
-                'descricao': item_processado['descricao']
+                'descricao': item_processado['descricao'],
+                'categoria': item_processado['categoria'],
                 }
                 })
             preco_total += item_processado['preco']
             session['preco_total'] = preco_total
             print(session['carrinho'])
-        return render_template('carrinho.html', produto=session['carrinho'], preco_total=preco_total)
+        return redirect(request.referrer)
     
     if not session['carrinho']:
         preco_total = session.pop('preco_total', None)
 
-    return render_template('carrinho.html', produto=session['carrinho'], preco_total=preco_total)
+    return render_template('carrinho.html')
 
 @app.route('/remove_do_carrinho', methods=['GET', 'POST'])
 def remover_do_carrinho():
     item_id = request.form.get('item_id')
-    preco_total = float(request.form.get('total'))
 
     if item_id in session['carrinho']:
-        preco_total -= float(session['carrinho'][item_id]['preco'])
+        session['preco_total'] -= float(session['carrinho'][item_id]['preco'])
         del session['carrinho'][item_id]
     
     if not session['carrinho']:
-        preco_total = session.pop('preco_total', None)
+        session.pop('preco_total', None)
 
-    return render_template('carrinho.html', produto=session['carrinho'], preco_total=preco_total)
+    return render_template('carrinho.html')
 
 @app.route('/esvazia_carrinho', methods=['GET', 'POST'])
 def esvaziar_carrinho():
@@ -236,6 +236,35 @@ def esvaziar_carrinho():
         session.pop('carrinho', None)
         session.pop('preco_total', None)
     return redirect(url_for('index'))
+
+@app.route('/comprar_carrinho', methods=['GET', 'POST'])
+def comprar_carrinho():
+    str_compra = {}
+    carrinho = request.form.get('carrinho')
+    carrinho_dict = processa_carrinho(carrinho)
+
+    print('Carrinho Dict:', carrinho_dict)
+    for item in carrinho_dict:
+        str_compra.update(
+            {item:{
+            'id':carrinho_dict[item]['id'],
+            'nome':carrinho_dict[item]['nome'],
+            'preco':carrinho_dict[item]['preco'],
+            'categoria':carrinho_dict[item]['categoria']
+            }})
+        
+    result_str = ''
+    
+    secrets_keys = ['id']
+    for id in str_compra.keys():
+        for key, value in str_compra[id].items():
+            if key not in secrets_keys:
+                result_str += f'{key} = {value} %0a'
+        result_str += '-'*10 + '%0a'
+
+    result_str += f'%0aTOTAL: R${session.get("preco_total")}'
+    return render_template('checkout.html', mensagem_str=result_str, mensagem_dict=str_compra)
+
 
 @app.route("/error/<error>", methods=['GET'])
 def mostrar_erro(error):
