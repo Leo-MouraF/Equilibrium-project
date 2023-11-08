@@ -43,7 +43,7 @@
 </header>
 {% if session['email'] == 'email@gmail.com' %}
     <div class='descricao-produto'>
-        <p>Logado como: {{email}}</p>
+        <p class='email-logado'><span class='logado-como'>Logado como:</span> {{email}}</p>
         <p><a href='/logout'>Logout</a></p>
         <p><a href='/submit_item'>Adicionar Produto</a>
     </div>

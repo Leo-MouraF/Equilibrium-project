@@ -226,6 +226,14 @@ img {
     background: #222222;
 }
 
+.email-logado {
+    color: #54A316;
+}
+
+.logado-como {
+    color: #DBD7D7;
+}
+
 .descricao-produto p {
     display: inline-block;
     white-space: wrap;
