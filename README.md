@@ -5,21 +5,20 @@ Utilizou-se o framework Flask para a construção da API.
 # Como rodar a aplicação
 ## Após a clonagem do projeto, precisa criar um ambiente virtual e ativa-lo na pasta raiz:
 Primeiramente, entrar no diretório da pasta do projeto:
-#### cd Equilibrium-project
+#### cd nome-da-pasta-raiz
+
 Criando o ambiente virtual:
 #### python -m venv .venv
-Ativando o ambiente:
+
+Ativando o ambiente (Windows):
 #### .venv/Scripts/activate
 
-## Agora basta instalar a framework utilizada:
-#### pip install Flask
+Ativando o ambiente (Mac/Linux):
+#### .venv/bin/activate
 
-## Com o Flask instalado, é possível rodar a aplicação:
-Primeiro use o seguinte comando:
-#### set FALSK_APP='app.py'
-Feito isso, o próximo comando será:
+Agora com o ambiente ativo, basta instalar as depencias com o seguinte comando:
+#### pip install -r requirements.txt
+
+E para rodar a aplicação:
 #### flask run
-
-Observação: Caso encontre algum problema para rodar a aplicação, verifique se o diretório em que você está tentando utilizar o comando "flask run", tem o final "Equilibrium-project".
-Com isso será possível visualizar a página home e navegar pelas demais abas. 
 
