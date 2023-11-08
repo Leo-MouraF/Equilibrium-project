@@ -19,6 +19,9 @@ Ativando o ambiente (Mac/Linux):
 Agora com o ambiente ativo, basta instalar as depencias com o seguinte comando:
 #### pip install -r requirements.txt
 
+Cire o arquivo .env baseado no arquivo .env.exemplo:
+#### SECRET_KEY = 'nome_desejado'
+
 E para rodar a aplicação:
 #### flask run
 
