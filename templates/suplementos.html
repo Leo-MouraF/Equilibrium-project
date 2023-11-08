@@ -27,7 +27,7 @@
                     <button type="submit">Deletar</button>
                 </form>
                 {% else %}
-                <a class='manda-mensagem' target='_blank' href="https://api.whatsapp.com/send?phone=+5548991250202&text=Olá! Gostaria de comprar este produto:%0a{{suplementos[suplemento]['nome']}}%0aR${{suplementos[suplemento]['preco']}}">Comprar</a>
+                <a class='manda-mensagem' target='_blank' href="https://api.whatsapp.com/send?phone=+5547997631730&text=Olá! Gostaria de comprar este produto:%0a{{suplementos[suplemento]['nome']}}%0aR${{suplementos[suplemento]['preco']}}">Comprar</a>
                 <form action=" {{url_for('adicionar_ao_carrinho')}}" method='post'>
                     <input name='produto' type="hidden" value='{{suplementos[suplemento]}}'>
                     <button type='submit'>Adicionar ao carrinho</button>
