@@ -14,7 +14,7 @@ Ativando o ambiente (Windows):
 #### .venv/Scripts/activate
 
 Ativando o ambiente (Mac/Linux):
-#### .venv/bin/activate
+#### . .venv/bin/activate
 
 Agora com o ambiente ativo, basta instalar as depencias com o seguinte comando:
 #### pip install -r requirements.txt
@@ -24,4 +24,9 @@ Cire o arquivo .env baseado no arquivo .env.exemplo:
 
 E para rodar a aplicação:
 #### flask run
+
+Para testar a função de admin, basta colocar /login após o endereço local.
+Seu email e senha serão:
+#### email@gmail.com
+#### senhasecreta
 
