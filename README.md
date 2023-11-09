@@ -1,4 +1,4 @@
-# Equilibrium-project
+# Loja-project
 Projeto feito para uma loja de suplementos e produtos naturais, feito com o intuíto de aprendizagem e prática.
 Utilizou-se o framework Flask para a construção da API.
 
@@ -11,7 +11,7 @@ Criando o ambiente virtual:
 #### python -m venv .venv
 
 Ativando o ambiente (Windows):
-#### .venv/Scripts/activate
+#### venv/Scripts/activate
 
 Ativando o ambiente (Mac/Linux):
 #### . .venv/bin/activate
